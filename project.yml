@@ -1,0 +1,25 @@
+name: CineFlow
+options:
+  bundleIdPrefix: com.cineflow
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    PRODUCT_BUNDLE_IDENTIFIER: com.cineflow.app
+    PRODUCT_NAME: CineFlow
+    INFOPLIST_KEY_CFBundleDisplayName: CinéFlow
+    INFOPLIST_KEY_UILaunchScreen_Generation: YES
+    SWIFT_VERSION: "5.0"
+targets:
+  CineFlow:
+    type: application
+    platform: iOS
+    sources:
+      - path: CineFlowApp.swift
+      - path: WebsiteView.swift
+    settings:
+      base:
+        TARGETED_DEVICE_FAMILY: "1,2"
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_NSAppTransportSecurity_NSAllowsArbitraryLoads: NO

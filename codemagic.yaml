@@ -1,0 +1,31 @@
+workflows:
+  ios-ipa:
+    name: CinéFlow iOS IPA
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    integrations:
+      app_store_connect: AppStoreConnect
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.cineflow.app
+      vars:
+        XCODE_PROJECT: "CineFlow.xcodeproj"
+        XCODE_SCHEME: "CineFlow"
+      xcode: latest
+    scripts:
+      - name: Install XcodeGen and generate project
+        script: |
+          brew install xcodegen
+          xcodegen generate --spec project.yml
+      - name: Apply signing profiles
+        script: |
+          xcode-project use-profiles
+      - name: Build signed IPA
+        script: |
+          xcode-project build-ipa \
+            --project "$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
